@@ -16,7 +16,7 @@ class Blockchain:
     def _add_genesis(self) -> None:
         genesis = Block(
             index=0,
-            log_entry={"event_type": "GENESIS", "message": "Blockchain inicijalizovan"},
+            log_entry={"event_type": "GENESIS", "message": "Blockchain initialized"},
             previous_hash="0" * 64,
         )
         self.chain.append(genesis)
@@ -54,7 +54,7 @@ class Blockchain:
                 errors.append(
                     {
                         "block_index": i,
-                        "reason": "Sadržaj bloka je izmenjen – hash se ne poklapa",
+                        "reason": "Block content has been modified – hash does not match",
                     }
                 )
 
@@ -62,7 +62,7 @@ class Blockchain:
                 errors.append(
                     {
                         "block_index": i,
-                        "reason": "Lanac je prekinut – previous_hash ne odgovara",
+                        "reason": "Chain is broken – previous_hash does not match",
                     }
                 )
 
@@ -74,6 +74,12 @@ class Blockchain:
             self._save()
             return True
         return False
+
+    def reset(self) -> None:
+        self.chain = []
+        if os.path.exists(STORAGE_PATH):
+            os.remove(STORAGE_PATH)
+        self._add_genesis()
 
     def chain_as_list(self) -> list[dict[str, Any]]:
         return [b.to_dict() for b in self.chain]

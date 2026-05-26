@@ -40,5 +40,11 @@ def validate() -> dict[str, Any]:
 def tamper(req: TamperRequest) -> dict[str, str]:
     success = bc.tamper(req.index, req.new_details)
     if not success:
-        raise HTTPException(status_code=400, detail="Neispravan index bloka")
-    return {"message": f"Blok #{req.index} je izmenjen"}
+        raise HTTPException(status_code=400, detail="Invalid block index")
+    return {"message": f"Block #{req.index} has been tampered"}
+
+
+@router.delete("/chain")
+def reset_chain() -> dict[str, str]:
+    bc.reset()
+    return {"message": "Blockchain has been reset"}

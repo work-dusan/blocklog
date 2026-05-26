@@ -32,10 +32,10 @@ export function useBlockchain() {
     }
   };
 
-  const tamperBlock = async (index, newDetails, user) => {
+  const tamperBlock = async (index, fields, user) => {
     try {
       await log("LOGIN_FAILED", user, `Attempted block tampering #${index}`);
-      await tamperApi({ index, new_details: newDetails });
+      await tamperApi({ index, updates: fields });
       fetchChain();
     } catch {
       setApiError("Failed to connect to the server.");

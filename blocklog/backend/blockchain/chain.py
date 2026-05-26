@@ -68,9 +68,12 @@ class Blockchain:
 
         return errors
 
-    def tamper(self, index: int, new_details: str) -> bool:
+    def tamper(self, index: int, fields: dict[str, str]) -> bool:
+        allowed = {"event_type", "user", "ip", "details"}
         if 0 < index < len(self.chain):
-            self.chain[index].log_entry["details"] = new_details
+            for field, value in fields.items():
+                if field in allowed:
+                    self.chain[index].log_entry[field] = value
             self._save()
             return True
         return False

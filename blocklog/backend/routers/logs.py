@@ -16,7 +16,7 @@ class LogRequest(BaseModel):
 
 class TamperRequest(BaseModel):
     index: int
-    new_details: str
+    updates: dict[str, str]
 
 
 @router.get("/chain")
@@ -38,7 +38,7 @@ def validate() -> dict[str, Any]:
 
 @router.post("/tamper")
 def tamper(req: TamperRequest) -> dict[str, str]:
-    success = bc.tamper(req.index, req.new_details)
+    success = bc.tamper(req.index, req.updates)
     if not success:
         raise HTTPException(status_code=400, detail="Invalid block index")
     return {"message": f"Block #{req.index} has been tampered"}

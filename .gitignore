@@ -1,0 +1,16 @@
+# Python
+blocklog/backend/venv/
+blocklog/backend/__pycache__/
+blocklog/backend/blockchain/__pycache__/
+blocklog/backend/routers/__pycache__/
+blocklog/backend/storage/chain.json
+blocklog/backend/venv/
+*.pyc
+
+# Node
+blocklog/frontend/node_modules/
+blocklog/frontend/dist/
+
+# Other
+.DS_Store
+.env
